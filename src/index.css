@@ -11,7 +11,7 @@ All colors MUST be HSL.
     --background: 220 25% 8%;
     --foreground: 210 40% 98%;
 
-    --card: 220 25% 10%;
+    --card: 280 30% 12%;
     --card-foreground: 210 40% 98%;
 
     --popover: 220 25% 10%;
@@ -43,18 +43,18 @@ All colors MUST be HSL.
     --calc-display-text: 210 40% 98%;
     --calc-number: 220 25% 15%;
     --calc-number-hover: 220 25% 20%;
-    --calc-operator: 262 52% 47%;
-    --calc-operator-hover: 262 52% 55%;
-    --calc-equals: 142 71% 45%;
-    --calc-equals-hover: 142 71% 55%;
-    --calc-clear: 0 84% 60%;
-    --calc-clear-hover: 0 84% 70%;
+    --calc-operator: 320 60% 50%;
+    --calc-operator-hover: 320 60% 60%;
+    --calc-equals: 280 70% 55%;
+    --calc-equals-hover: 280 70% 65%;
+    --calc-clear: 320 80% 60%;
+    --calc-clear-hover: 320 80% 70%;
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(262 52% 47%), hsl(292 52% 47%));
-    --gradient-number: linear-gradient(135deg, hsl(220 25% 15%), hsl(220 25% 18%));
-    --gradient-operator: linear-gradient(135deg, hsl(262 52% 47%), hsl(282 52% 50%));
-    --gradient-equals: linear-gradient(135deg, hsl(142 71% 45%), hsl(162 71% 48%));
+    /* Gradients - Pink-Purple-Blue Theme */
+    --gradient-primary: linear-gradient(135deg, hsl(320 70% 50%), hsl(280 60% 55%), hsl(240 55% 60%));
+    --gradient-number: linear-gradient(135deg, hsl(280 40% 20%), hsl(260 35% 25%));
+    --gradient-operator: linear-gradient(135deg, hsl(320 60% 50%), hsl(280 55% 55%));
+    --gradient-equals: linear-gradient(135deg, hsl(280 70% 55%), hsl(240 65% 60%));
 
     /* Shadows */
     --shadow-button: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -124,5 +124,12 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    background: linear-gradient(135deg, 
+      hsl(320 70% 15%) 0%,     /* Deep pink */
+      hsl(280 60% 18%) 35%,    /* Purple */
+      hsl(240 55% 20%) 70%,    /* Deep blue */
+      hsl(220 50% 15%) 100%    /* Dark blue */
+    );
+    min-height: 100vh;
   }
 }
