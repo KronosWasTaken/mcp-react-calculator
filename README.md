@@ -153,4 +153,3 @@ Create a Jira ticket for "Calculator App Setup"
 - [Atlassian Rovo IDE Setup Guide](https://support.atlassian.com/rovo/docs/setting-up-ides/) - Atlassian's official IDE integration documentation
 
 
-

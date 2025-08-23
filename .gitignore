@@ -1,12 +1,3 @@
-# Dependencies
-node_modules/
-
-# Build outputs
-dist/
-dist-ssr/
-build/
-coverage/
-
 # Logs
 logs
 *.log
@@ -16,63 +7,18 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# Environment files
-.env*
-!.env.example
-!.env.development
-!.env.production
+node_modules
+dist
+dist-ssr
+*.local
 
-# IDE and editor files
+# Editor directories and files
 .vscode/*
 !.vscode/extensions.json
-!.vscode/settings.json
-.idea/
-*.swp
-*.swo
-*~
-
-# OS-specific files
+.idea
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-Desktop.ini
-
-# Vite-specific files
-.vite/
-.env.local
-.env.development.local
-.env.production.local
-.env.test.local
-
-# Testing
-__tests__/coverage/
-jest/coverage/
-.nyc_output/
-
-# Package manager
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
-
-# Temporary files
-*.tmp
-*.temp
-
-# Debug files
-*.debug
-
-# IDE specific
-*.sublime-project
-*.sublime-workspace
-.atoms/
-.vscode-test/
-
-# React specific
-.pnp/
-.pnp.js
-# typescript
-*.tsbuildinfo
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
