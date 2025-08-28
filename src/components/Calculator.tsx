@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { usePostHog } from 'posthog-js/react';
 
 interface CalculatorState {
   display: string;
@@ -11,6 +12,7 @@ interface CalculatorState {
 }
 
 const Calculator = () => {
+  const posthog = usePostHog();
   const [state, setState] = useState<CalculatorState>({
     display: '0',
     expression: '',
@@ -21,6 +23,12 @@ const Calculator = () => {
   });
 
   const inputNumber = (num: string) => {
+    // Track number button clicks
+    posthog.capture('calculator_number_clicked', {
+      number: num,
+      timestamp: new Date().toISOString()
+    });
+
     const { display, waitingForOperand, expression, showingResult, previousValue, operation } = state;
 
     if (showingResult) {
@@ -63,6 +71,11 @@ const Calculator = () => {
   };
 
   const inputDecimal = () => {
+    // Track decimal button clicks
+    posthog.capture('calculator_decimal_clicked', {
+      timestamp: new Date().toISOString()
+    });
+
     const { display, waitingForOperand, expression, showingResult, previousValue, operation } = state;
 
     if (showingResult) {
@@ -103,6 +116,11 @@ const Calculator = () => {
   };
 
   const clear = () => {
+    // Track clear actions
+    posthog.capture('calculator_cleared', {
+      timestamp: new Date().toISOString()
+    });
+
     setState({
       display: '0',
       expression: '',
@@ -114,7 +132,13 @@ const Calculator = () => {
   };
 
   const performOperation = (nextOperation: string) => {
-    const { display, previousValue, operation, expression, showingResult } = state;
+    // Track operation button clicks
+    posthog.capture('calculator_operation_clicked', {
+      operation: nextOperation,
+      timestamp: new Date().toISOString()
+    });
+
+    const { display, previousValue, operation, expression, showingResult, waitingForOperand } = state;
     const inputValue = parseFloat(display);
 
     if (showingResult) {
@@ -167,14 +191,23 @@ const Calculator = () => {
     }
   };
 
-
-
   const handleEquals = () => {
     const { display, previousValue, operation, expression } = state;
     const inputValue = parseFloat(display);
 
     if (previousValue !== null && operation) {
       const newValue = calculate(previousValue, inputValue, operation);
+      
+      // Track calculation results
+      posthog.capture('calculator_calculation', {
+        expression: expression,
+        result: newValue,
+        operation: operation,
+        firstNumber: previousValue,
+        secondNumber: inputValue,
+        timestamp: new Date().toISOString()
+      });
+
       setState({
         display: String(newValue),
         expression: expression, // Keep the expression to show what calculation was performed

@@ -10,6 +10,39 @@
       "headers": {
         "Authorization": "Bearer YOUR_GITHUB_PAT"
       }
+    },
+    "posthog": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote@latest",
+        "https://mcp.posthog.com/sse",
+        "--header",
+        "Authorization:${POSTHOG_AUTH_HEADER}"
+      ],
+      "env": {
+        "POSTHOG_AUTH_HEADER": "Bearer {INSERT_YOUR_PERSONAL_API_KEY_HERE} "
+      }
+    },
+    "cloudflare-docs": {
+      "command": "npx",
+      "args": ["mcp-remote", "https://docs.mcp.cloudflare.com/sse"]
+    },
+    "cloudflare-bindings": {
+      "command": "npx",
+      "args": ["mcp-remote", "https://bindings.mcp.cloudflare.com/sse"]
+    },
+    "cloudflare-observability": {
+      "command": "npx",
+      "args": ["mcp-remote", "https://observability.mcp.cloudflare.com/sse"]
+    },
+    "cloudflare-radar": {
+      "command": "npx",
+      "args": ["mcp-remote", "https://radar.mcp.cloudflare.com/sse"]
+    },
+    "cloudflare-ai-gateway": {
+      "command": "npx",
+      "args": ["mcp-remote", "https://ai-gateway.mcp.cloudflare.com/sse"]
     }
   }
 }
