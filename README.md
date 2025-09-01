@@ -318,3 +318,186 @@ Show me PostHog analytics for my calculator
 - [Cloudflare Firewall for AI](https://blog.cloudflare.com/firewall-for-ai/)
 - [PostHog Dashboard](https://us.i.posthog.com/project/2-for-ai/13295/dashboard/529133)
 
+# PostHog LLM Analytics Integration
+
+This project now includes comprehensive LLM analytics integration with PostHog, allowing you to track Google Gen AI (Gemini) usage, monitor performance, and analyze user interactions with AI features.
+
+## 🚀 Features
+
+- **Automatic LLM Event Capture**: All OpenAI API calls are automatically tracked
+- **Performance Monitoring**: Latency, token usage, and model performance metrics
+- **User Analytics**: Track individual user interactions and conversation patterns
+- **Embedding Analytics**: Monitor embedding generation and usage
+- **Custom Event Tracking**: Capture additional business-specific events
+- **Privacy Controls**: Configurable privacy modes for sensitive data
+
+## 📦 Installation
+
+The required packages have been installed:
+
+```bash
+npm install posthog-node @posthog/ai @google/genai
+```
+
+## ⚙️ Configuration
+
+### Environment Variables
+
+Create a `.env` file in your project root:
+
+```env
+# PostHog Configuration
+VITE_POSTHOG_API_KEY=your_posthog_project_api_key_here
+VITE_POSTHOG_HOST=https://us.i.posthog.com
+
+# Google Gen AI (Gemini) Configuration
+VITE_GEMINI_API_KEY=your_gemini_api_key_here
+```
+
+### PostHog Setup
+
+1. **Get your API key** from [PostHog Dashboard](https://us.i.posthog.com/project/2-for-ai/13295/settings)
+2. **Update the .env file** with your actual Gemini API key
+3. **Restart your development server**
+
+## 🔧 Usage
+
+### Basic LLM Call with Analytics
+
+```typescript
+import { generateText } from './lib/google-genai'
+
+const response = await generateText('Tell me a joke', {
+  model: 'gemini-2.5-flash',
+  distinctId: 'user_123',
+  traceId: 'conversation_456',
+  properties: {
+    conversation_id: 'chat_789',
+    user_type: 'premium'
+  }
+})
+```
+
+### Embedding Generation with Analytics
+
+```typescript
+import { createEmbeddingWithGoogle } from './lib/google-genai'
+
+const embedding = await createEmbeddingWithGoogle('Sample text', {
+  model: 'text-embedding-004',
+  distinctId: 'user_123',
+  properties: {
+    text_length: 11,
+    source: 'user_input'
+  }
+})
+```
+
+### Custom Event Tracking
+
+```typescript
+import { posthog } from './lib/posthog'
+
+// Track custom events
+posthog.capture('user_action', {
+  action: 'button_click',
+  user_id: 'user_123',
+  timestamp: Date.now()
+})
+```
+
+## 📊 Analytics Dashboard
+
+### LLM Analytics Section
+
+In your PostHog dashboard, you'll find:
+
+- **Traces**: Complete conversation flows with timing
+- **Generations**: Individual LLM responses with metadata
+- **Performance Metrics**: Latency, token usage, and model performance
+- **User Analytics**: Individual user interaction patterns
+- **Cost Tracking**: Monitor API usage and costs
+
+### Key Metrics Tracked
+
+- `$ai_input`: User prompts and input content
+- `$ai_input_tokens`: Token count for input
+- `$ai_output_tokens`: Token count for responses
+- `$ai_latency`: Response time in milliseconds
+- `$ai_model`: Model used (e.g., gpt-4o-mini)
+- `$ai_model_parameters`: Model configuration
+- `$ai_cache_read_input_tokens`: Cache hit metrics
+- `$ai_reasoning_tokens`: Reasoning token usage
+- `$ai_tools`: Tool usage in responses
+- `$ai_output_choices`: Response choices and metadata
+
+## 🎯 Demo Component
+
+A complete demo component is available at `/llm-demo` route that showcases:
+
+- **LLM Request Demo**: Test Google Gen AI calls with full analytics
+- **Embedding Demo**: Generate and analyze text embeddings with Gemini
+- **Event Tracking**: Monitor custom events in real-time
+- **Performance Metrics**: View response times and token usage
+
+### Accessing the Demo
+
+1. Start your development server: `npm run dev`
+2. Navigate to `http://localhost:5173/llm-demo`
+3. Test the LLM analytics functionality
+4. Check your PostHog dashboard for real-time data
+
+## 🔒 Privacy and Security
+
+### Privacy Controls
+
+- **Anonymous Events**: Don't pass `distinctId` for anonymous tracking
+- **Privacy Mode**: Enable `privacyMode: true` for sensitive data
+- **Data Filtering**: Configure what data is captured in PostHog
+- **User Consent**: Implement consent management for GDPR compliance
+
+### Security Best Practices
+
+- **Environment Variables**: Never commit API keys to version control
+- **API Key Rotation**: Regularly rotate your OpenAI API keys
+- **Access Control**: Limit PostHog dashboard access to authorized users
+- **Data Retention**: Configure appropriate data retention policies
+
+## 🚨 Troubleshooting
+
+### Common Issues
+
+1. **No LLM Events in PostHog**
+   - Verify API keys are correct
+   - Check PostHog host URL
+   - Ensure Gemini API key is valid
+
+2. **Build Errors**
+   - Verify all packages are installed
+   - Check TypeScript compilation
+   - Ensure environment variables are loaded
+
+3. **Performance Issues**
+   - Monitor API rate limits
+   - Check network connectivity
+   - Verify PostHog service status
+
+### Debug Mode
+
+Enable debug mode in development:
+
+```typescript
+// In src/lib/posthog.ts
+loaded: (posthog) => {
+  if (import.meta.env.DEV) posthog.debug()
+}
+```
+
+## 📚 Additional Resources
+
+- [PostHog LLM Analytics Documentation](https://posthog.com/docs/llm-analytics)
+- [Google Gen AI (Gemini) Docs](https://ai.google.dev/)
+- [PostHog AI SDK](https://github.com/PostHog/posthog-ai)
+- [Model Context Protocol](https://modelcontextprotocol.io/)
+
+
