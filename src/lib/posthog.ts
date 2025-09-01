@@ -1,6 +1,6 @@
 import posthog from 'posthog-js'
 
-// Initialize PostHog for client-side analytics
+
 export const initPostHog = () => {
   if (typeof window !== 'undefined') {
     const apiKey = import.meta.env.VITE_POSTHOG_API_KEY
@@ -16,8 +16,8 @@ export const initPostHog = () => {
         loaded: (posthog) => {
           if (import.meta.env.DEV) posthog.debug()
         },
-        capture_pageview: false, // Disable automatic pageview capture
-        capture_pageleave: false, // Disable automatic pageleave capture
+        capture_pageview: false, 
+        capture_pageleave: false, 
       }
     )
   }
